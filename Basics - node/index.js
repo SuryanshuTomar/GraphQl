@@ -1,8 +1,24 @@
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import db from "./db";
 
 // graphql types
 import { typeDefs } from "./schema";
+
+// Resolver functions -
+const resolvers = {
+	Query: {
+		reviews: function () {
+			return db.reviews;
+		},
+		games: function () {
+			return db.games;
+		},
+		authors: function () {
+			return db.authors;
+		},
+	},
+};
 
 // Apollo server takes an object which takes two arguments
 // 1. Typedefs -> These are definition of different datatypes we wanna expose in our graph.
@@ -14,7 +30,7 @@ const server = new ApolloServer({
 	typeDefs,
 
 	// Resolvers
-	// resolvers,
+	resolvers,
 });
 
 // Start the server
