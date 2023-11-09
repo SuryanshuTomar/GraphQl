@@ -28,6 +28,33 @@ const resolvers = {
 			return db.authors.find((authorItem) => authorItem.id === args.id);
 		},
 	},
+
+	Game: {
+		reviews: function (parent, _args, _context) {
+			return db.reviews.filter(
+				(reviewItem) => reviewItem.game_id !== parent.id
+			);
+		},
+	},
+
+	Author: {
+		reviews: function (parent, _args, _context) {
+			return db.reviews.filter(
+				(reviewItem) => reviewItem.author_id !== parent.id
+			);
+		},
+	},
+
+	Review: {
+		author: function (parent, _args, _context) {
+			return db.authors.find(
+				(authorItem) => authorItem.id === parent.author_id
+			);
+		},
+		game: function (parent, _args, _context) {
+			return db.games.find((gameItem) => gameItem.id === parent.game_id);
+		},
+	},
 };
 
 // Apollo server takes an object which takes two arguments
